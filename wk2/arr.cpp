@@ -84,23 +84,22 @@ int main() {
 
     cout << "Let's talk about " << name << ".\n";
 
+    enum favor {LOVE, LIKE, DISLIKE, LOATHE};
     // use a switch statement to pick one random response
     switch(rand() % 4) {
-        case 0:
+        case LOVE:
             cout << "I love " << name << ".\n";
             break;
-        case 1:
+        case LIKE:
             cout << "I like " << name << ".\n";
             break;
-        case 2:
+        case DISLIKE:
             cout << "I don't like " << name << ".\n";
             break;
-        case 3:
+        case LOATHE:
             cout << "I loathe " << name << ".\n";
             break;
     }
-
-
 
     return 0;
 }
