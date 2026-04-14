@@ -14,116 +14,156 @@ using namespace std;
 int main() {
     cout << "Let's learn about Vectors!\n";
 
-    int chapter = 0;
-    cout << "What program would you like to run?\n";
-    cout << "Press 1 for Vectors.\n";
-    cout << "Press 2 for push_back() and pop_back().\n";
-    cout << "Press 3 for algorithms.\n";
+    // for chapter 4
+    vector<string> favs = {"Zelda", "Mario", "Metroid"};
 
-    cin >> chapter;
+    do {
 
-    if(chapter == 1) {
-        // collection initializer
-        vector<string> names = {"Finn", 
-                                "Jake", 
-                                "Bubblegum", 
-                                "Marceline", 
-                                "Shelby"};
+        int chapter = 0;
+        cout << "What program would you like to run?\n";
+        cout << "Press 1 for Vectors.\n";
+        cout << "Press 2 for push_back() and pop_back().\n";
+        cout << "Press 3 for algorithms.\n";
+        cout << "Press 4 for removing.\n";
 
-        cout << "There are " << names.size() << " in the vector.\n";
-        cout << "Here are your names:\n";
+        cin >> chapter;
 
-        for(int i = 0; i < names.size(); i++) {
-            cout << i + 1 << ". " << names[i] << "\n";
+        if(chapter == 1) {
+            // collection initializer
+            vector<string> names = {"Finn", 
+                                    "Jake", 
+                                    "Bubblegum", 
+                                    "Marceline", 
+                                    "Shelby"};
+
+            cout << "There are " << names.size() << " in the vector.\n";
+            cout << "Here are your names:\n";
+
+            for(int i = 0; i < names.size(); i++) {
+                cout << i + 1 << ". " << names[i] << "\n";
+            }
+
+            cout << "the first name in the vector is " << *(names.begin()) << ".\n";
+
+            // creating our first iterator. it's a pointer to an element in a vector.
+            vector<string>::iterator iter;
+
+            iter = names.begin() + 2;
+
+            // dereference the iter with an asterisk at the beginning.
+            // what's with that word "dereference"? a pointer can be thought of as a nickname
+            // a "reference" to something else. when we de-reference it, we get the value
+            // that is at that point.
+            cout << "iter is pointing at " << *iter << ".\n";
+
+        } // end of chapter 1
+        if(chapter == 2) {
+            cout << "Let's use push_back() and pop_back().\n";
+
+            vector<string> favMovies;
+
+            while(favMovies.size() < 3) {
+                cout << "please add a favorite movie: ";
+                string input;
+                cin >> input;
+                // cin.ignore(INT_MAX);        // fixes issues with working with cin and getline()
+                //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                //getline(cin, input);
+
+                favMovies.push_back(input);
+            }
+
+            cout << "Here are your favorite movies:\n";
+            // this time, use a for look with an iterator to move through the vector.
+            for(vector<string>::iterator iter = favMovies.begin(); iter != favMovies.end(); iter++) {
+                cout << *iter << endl;
+            }
         }
+        if(chapter == 3) {
+            vector<string> friends;
 
-        cout << "the first name in the vector is " << *(names.begin()) << ".\n";
+            friends.push_back("Joey");
+            friends.push_back("Monica");
+            friends.push_back("Phoebe");
+            friends.push_back("Ross");
+            friends.push_back("Chandler");
+            friends.push_back("Rachael");
 
-        // creating our first iterator. it's a pointer to an element in a vector.
-        vector<string>::iterator iter;
+            random_shuffle(friends.begin(), friends.end());
 
-        iter = names.begin() + 2;
+            cout << "here are your friends:\n";
+            for(int i = 0; i < friends.size(); i++) {
+                cout << friends[i] << ".\n";
+            }
 
-        // dereference the iter with an asterisk at the beginning.
-        // what's with that word "dereference"? a pointer can be thought of as a nickname
-        // a "reference" to something else. when we de-reference it, we get the value
-        // that is at that point.
-        cout << "iter is pointing at " << *iter << ".\n";
+            cout << "Please choose a friend to go visit:\n";
+            vector<string>::iterator chosenFriend;
 
-    } // end of chapter 1
-    if(chapter == 2) {
-        cout << "Let's use push_back() and pop_back().\n";
-
-        vector<string> favMovies;
-
-        while(favMovies.size() < 3) {
-            cout << "please add a favorite movie: ";
             string input;
             cin >> input;
-            // cin.ignore(INT_MAX);        // fixes issues with working with cin and getline()
-            //cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            //getline(cin, input);
+            
+            chosenFriend = find(friends.begin(), friends.end(), input);
 
-            favMovies.push_back(input);
-        }
+            if(chosenFriend != friends.end()){
+                // displays the name of chosenFriend... if we found one...
+                cout << "Let's talk to " << *chosenFriend << " today!\n";
+            }
+            else {
+                cout << "I couldn't find " << input << " in your friends.\n";
+            }
 
-        cout << "Here are your favorite movies:\n";
-        // this time, use a for look with an iterator to move through the vector.
-        for(vector<string>::iterator iter = favMovies.begin(); iter != favMovies.end(); iter++) {
-            cout << *iter << endl;
-        }
-    }
-    if(chapter == 3) {
-        vector<string> friends;
+            cout << "Let's give " << *chosenFriend << " a new name!\n";
+            cin >> input;
+            *chosenFriend = input;
 
-        friends.push_back("Joey");
-        friends.push_back("Monica");
-        friends.push_back("Phoebe");
-        friends.push_back("Ross");
-        friends.push_back("Chandler");
-        friends.push_back("Rachael");
+            cout << "Their name is now " << *chosenFriend << ".\n";
 
-        random_shuffle(friends.begin(), friends.end());
 
-        cout << "here are your friends:\n";
-        for(int i = 0; i < friends.size(); i++) {
-            cout << friends[i] << ".\n";
-        }
+            // // use an algorithm to find a friend.
+            // chosenFriend = find(friends.begin(), friends.end(), "Ross");
 
-        cout << "Please choose a friend to go visit:\n";
-        vector<string>::iterator chosenFriend;
+            // // displays the name of chosenFriend... if we found one...
+            // cout << "Let's talk to " << *chosenFriend << " today!\n";
 
-        string input;
-        cin >> input;
-        
-        chosenFriend = find(friends.begin(), friends.end(), input);
-
-        if(chosenFriend != friends.end()){
-            // displays the name of chosenFriend... if we found one...
-            cout << "Let's talk to " << *chosenFriend << " today!\n";
         }
         else {
-            cout << "I couldn't find " << input << " in your friends.\n";
+            cout << chapter << " isn't one of the options.\n";
         }
 
-        cout << "Let's give " << *chosenFriend << " a new name!\n";
-        cin >> input;
-        *chosenFriend = input;
+        if(chapter == 4) {
+            cout << "Let's remove an element from a global vector. (well, global-ish)\n";
 
-        cout << "Their name is now " << *chosenFriend << ".\n";
+            // DONE create a vector of strings at the top of main()
+            // show favs
 
+            // sort alphabetically
+            sort(favs.begin(), favs.end());
+            
+            for(int i = 0; i < favs.size(); i++) {
+                cout << favs[i] << endl;
+            }
 
-        // // use an algorithm to find a friend.
-        // chosenFriend = find(friends.begin(), friends.end(), "Ross");
+            // use cin to find the name to remove.
+            cout << "What name should we remove from favs?\n";
+            string input;
+            cin >> input;
 
-        // // displays the name of chosenFriend... if we found one...
-        // cout << "Let's talk to " << *chosenFriend << " today!\n";
+            auto iter = find(favs.begin(), favs.end(), input);
 
-    }
-    else {
-        cout << chapter << " isn't one of the options.\n";
-    }
+            if(iter != favs.end()) {
+                cout << "found it!\n";
+                // remove an element from the vector
+                // at the place the iterator is pointing at.
+                favs.erase(iter);   
+            }
+            else {
+                cout << "I could not find that name in favs.\n";
+            }
 
-    
+            // use vec.erase(iter) to remove a name.
+
+        }
+
+    } while (true);
 
 }
